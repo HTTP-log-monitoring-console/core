@@ -1,3 +1,5 @@
+package com.clfparser;
+
 import java.time.ZonedDateTime;
 
 /**
@@ -77,6 +79,21 @@ public class CLFLogEntry {
 
     public String getResource() {
         return resource;
+    }
+
+    @Override
+    public String toString() {
+        return "CLFLogEntry{" +
+                "remoteHost='" + remoteHost + '\'' +
+                ", userIdentifier='" + userIdentifier + '\'' +
+                ", userId='" + userId + '\'' +
+                ", timestamp=" + timestamp +
+                ", httpMethod='" + httpMethod + '\'' +
+                ", resource='" + resource + '\'' +
+                ", httpProtocol='" + httpProtocol + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", responseSize=" + responseSize +
+                '}';
     }
 
     public String getHttpProtocol() {

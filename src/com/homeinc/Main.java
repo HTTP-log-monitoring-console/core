@@ -22,6 +22,7 @@ public class Main implements LogFileTailerListener {
     public Main(String filename) {
         tailer = new FileTailReader(new File(filename), 1000, false);
         tailer.addLogFileTailerListener(this);
+        tailer.addLogFileTailerListener(new LogLineParser());
         tailer.start();
     }
 
