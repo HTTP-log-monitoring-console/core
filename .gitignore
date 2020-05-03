@@ -30,3 +30,6 @@ out/
 # apple stuff
 .DS_Store
 
+# general output stuff
+target/
+

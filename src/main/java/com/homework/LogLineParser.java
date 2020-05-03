@@ -1,4 +1,4 @@
-package com.homeinc;
+package com.homework;
 
 import com.clfparser.CLFLogEntry;
 import com.clfparser.CLFLogParser;

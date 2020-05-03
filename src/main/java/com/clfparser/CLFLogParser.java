@@ -7,12 +7,16 @@ import java.util.regex.Pattern;
 
 public class CLFLogParser {
     private static final Pattern REGEX = Pattern
-            .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S)+ (\\S)+ (\\S)+\" (\\d{3})(.)*$");
+            .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\S+) (\\S+)(.)*$");
 
     public static CLFLogEntry parse(final String line) throws Exception {
         final Matcher matcher = REGEX.matcher(line);
         if (matcher.find()) {
             try {
+//                for (int i = 0; i <= matcher.groupCount(); i++) {
+//                    System.out.println("------------------------------------");
+//                    System.out.println("Group " + i + ": " + matcher.group(i));
+//                }
                 return new CLFLogEntry(
                         matcher.group(1),
                         matcher.group(2),
