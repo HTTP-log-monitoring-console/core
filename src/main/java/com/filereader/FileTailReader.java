@@ -102,7 +102,9 @@ public class FileTailReader extends Thread {
                         file.seek(filePointer);
                         String line = file.readLine();
                         while (line != null) {
-                            this.fireNewLogFileLine(line);
+                            if (line.trim().length() > 0) {
+                                this.fireNewLogFileLine(line);
+                            }
                             line = file.readLine();
                         }
                         filePointer = file.getFilePointer();

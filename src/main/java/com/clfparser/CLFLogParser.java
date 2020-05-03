@@ -1,22 +1,37 @@
 package com.clfparser;
 
 import com.utils.ConversionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CLFLogParser {
+    // Pattern used to parse CLF logs; more info on what exactly each part is doing here: https://en.wikipedia.org/wiki/Common_Log_Format#Example
     private static final Pattern REGEX = Pattern
             .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\S+) (\\S+)(.)*$");
 
+    private static Logger logger = LogManager.getLogger(CLFLogParser.class);
+
+    /**
+     * Run parser and apply pattern
+     *
+     * @param line a full log line (from first character to line ending character(s)
+     * @return an entry object containing all log line parameters
+     * @throws Exception
+     */
     public static CLFLogEntry parse(final String line) throws Exception {
+        logger.debug("Parsing log file [" + line + "]");
+
         final Matcher matcher = REGEX.matcher(line);
         if (matcher.find()) {
+            logger.debug("Log parser found following parameters:");
+            for (int i = 0; i <= matcher.groupCount(); i++) {
+                logger.debug("Group " + i + ": " + matcher.group(i));
+            }
+
             try {
-//                for (int i = 0; i <= matcher.groupCount(); i++) {
-//                    System.out.println("------------------------------------");
-//                    System.out.println("Group " + i + ": " + matcher.group(i));
-//                }
                 return new CLFLogEntry(
                         matcher.group(1),
                         matcher.group(2),
@@ -27,7 +42,8 @@ public class CLFLogParser {
                         matcher.group(7),
                         Integer.parseInt(matcher.group(8)),
                         Integer.parseInt(matcher.group(9)));
-            } catch (Exception e) {
+            } catch (final Exception exception) {
+                logger.warn("Log line failed to parse correctly: " + exception.getMessage());
             }
         }
         return null;
