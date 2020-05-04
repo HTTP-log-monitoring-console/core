@@ -1,32 +1,27 @@
 package com.homework;
 
 import com.filereader.FileTailReader;
+import com.homework.internal.LogLineParserListener;
+import com.homework.internal.Orchestrator;
+import com.homework.ui.ApplicationWindow;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
  * Implements console-based log file tailing.
  */
-public class ApplicationMain {
+public class StartApplication {
     /**
      * The log file tailer
      */
     private FileTailReader tailer;
 
-    final static Logger logger = LogManager.getLogger(ApplicationMain.class);
-
-    /**
-     * Creates a new tail instance to follow the specified file
-     */
-    public ApplicationMain(String filename) {
-        tailer = new FileTailReader(new File(filename), 1000, false);
-        tailer.addLogFileTailerListener(new LogLineParser());
-        tailer.start();
-    }
+    final static Logger logger = LogManager.getLogger(StartApplication.class);
 
     /**
      * Command-line launcher
@@ -41,7 +36,19 @@ public class ApplicationMain {
         }
         final String inputLogFile = commandLine.getOptionValue("input");
         logger.debug("Input file path [" + inputLogFile + "]");
-        ApplicationMain tail = new ApplicationMain(inputLogFile);
+        Orchestrator orchestrator = new Orchestrator(inputLogFile);
+
+        // The UI execution is performed asynchronously using a separate thread.
+        new Thread(() -> {
+            ApplicationWindow uiWindow = new ApplicationWindow();
+            try {
+                uiWindow.launch();
+            } catch (IOException e) {
+                logger.error("failed to create console UI; exiting ...");
+                logger.error(e.getMessage(), e);
+                System.exit(1);
+            }
+        }, "ui-thread").start();
     }
 
     private static CommandLine parseCommandLine(final String[] arguments) {

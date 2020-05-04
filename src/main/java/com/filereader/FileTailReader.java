@@ -61,9 +61,9 @@ public class FileTailReader extends Thread {
     }
 
     protected void fireNewLogFileLine(String line) {
-        for (Iterator i = this.listeners.iterator(); i.hasNext();) {
-            LogFileTailerListener l = (LogFileTailerListener) i.next();
-            l.newLogFileLine(line);
+        for (final Iterator<LogFileTailerListener> iterator = this.listeners.iterator(); iterator.hasNext();) {
+            LogFileTailerListener listener = iterator.next();
+            listener.newLogFileLine(line);
         }
     }
 
