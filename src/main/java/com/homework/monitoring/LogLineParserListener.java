@@ -1,33 +1,36 @@
-package com.homework.internal;
+package com.homework.monitoring;
 
 import com.clfparser.CLFLogEntry;
 import com.clfparser.CLFLogParser;
-import com.filereader.LogFileTailerListener;
+import com.filereader.LogLineListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class LogLineParserListener implements LogFileTailerListener {
+/**
+ * Log file parser reading line by line the latest updates to the file.
+ */
+public class LogLineParserListener implements LogLineListener {
     /**
      * Logger.
      */
     Logger logger = LogManager.getLogger(LogLineParserListener.class);
 
     /**
-     * The manager object broadcasting new entries to listeners.
+     * The object broadcasting new entries to listeners.
      */
-    final LogEntryManager logEntryManager;
+    final LogEntryBroadcaster logEntryBroadcaster;
 
     /**
      * Constructor
-     * @param logEntryManager the manager object disseminating entries to all listeners.
+     * @param logEntryBroadcaster the manager object disseminating entries to all listeners.
      */
-    public LogLineParserListener(final LogEntryManager logEntryManager) {
-        if (logEntryManager == null) {
+    public LogLineParserListener(final LogEntryBroadcaster logEntryBroadcaster) {
+        if (logEntryBroadcaster == null) {
             logger.error("LogEntryManager is null ! Stopping application.");
             System.exit(1);
         }
 
-        this.logEntryManager = logEntryManager;
+        this.logEntryBroadcaster = logEntryBroadcaster;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class LogLineParserListener implements LogFileTailerListener {
         }
         if (entry != null) {
             logger.debug(entry);
-            logEntryManager.notifyEntry(entry);
+            logEntryBroadcaster.notifyEntry(entry);
         }
     }
 }

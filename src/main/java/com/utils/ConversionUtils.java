@@ -30,4 +30,15 @@ public class ConversionUtils {
         logger.debug("Parsed date from string [" + date + "] to Java object " + objectDate.toString());
         return objectDate;
     }
+
+    public static String extractHTTPSectionFromRequest(final String requestURL) {
+        if (requestURL == null || requestURL.isEmpty() || requestURL.charAt(0) != '/') {
+            return null;
+        }
+        if (requestURL.indexOf('/', 1) > 0) {
+            return requestURL.substring(0, requestURL.indexOf('/', 1));
+        } else {
+            return requestURL;
+        }
+    }
 }

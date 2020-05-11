@@ -7,12 +7,21 @@ import org.apache.logging.log4j.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parser for log lines.
+ */
 public class CLFLogParser {
-    // Pattern used to parse CLF logs; more info on what exactly each part is doing here: https://en.wikipedia.org/wiki/Common_Log_Format#Example
+    /**
+     * Logger.
+     */
+    private static Logger logger = LogManager.getLogger(CLFLogParser.class);
+
+    /**
+     * Pattern used to parse CLF logs; more info on what exactly each part is doing here: https://en.wikipedia.org/wiki/Common_Log_Format#Example
+     */
     private static final Pattern REGEX = Pattern
             .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\S+) (\\S+)(.)*$");
 
-    private static Logger logger = LogManager.getLogger(CLFLogParser.class);
 
     /**
      * Run parser and apply pattern
@@ -26,10 +35,10 @@ public class CLFLogParser {
 
         final Matcher matcher = REGEX.matcher(line);
         if (matcher.find()) {
-            logger.debug("Log parser found following parameters:");
-            for (int i = 0; i <= matcher.groupCount(); i++) {
-                logger.debug("Group " + i + ": " + matcher.group(i));
-            }
+//            logger.debug("Log parser found following parameters:");
+//            for (int i = 0; i <= matcher.groupCount(); i++) {
+//                logger.debug("Group " + i + ": " + matcher.group(i));
+//            }
 
             try {
                 return new CLFLogEntry(

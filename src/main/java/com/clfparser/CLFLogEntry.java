@@ -120,4 +120,27 @@ public class CLFLogEntry {
         this.httpStatusCode = httpStatusCode;
         this.responseSize = responseSize;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CLFLogEntry that = (CLFLogEntry) o;
+
+        if (getHttpStatusCode() != that.getHttpStatusCode()) return false;
+        if (getResponseSize() != that.getResponseSize()) return false;
+        if (getRemoteHost() != null ? !getRemoteHost().equals(that.getRemoteHost()) : that.getRemoteHost() != null)
+            return false;
+        if (getUserIdentifier() != null ? !getUserIdentifier().equals(that.getUserIdentifier()) : that.getUserIdentifier() != null)
+            return false;
+        if (getUserId() != null ? !getUserId().equals(that.getUserId()) : that.getUserId() != null) return false;
+        if (getTimestamp() != null ? !getTimestamp().equals(that.getTimestamp()) : that.getTimestamp() != null)
+            return false;
+        if (getHttpMethod() != null ? !getHttpMethod().equals(that.getHttpMethod()) : that.getHttpMethod() != null)
+            return false;
+        if (getResource() != null ? !getResource().equals(that.getResource()) : that.getResource() != null)
+            return false;
+        return getHttpProtocol() != null ? getHttpProtocol().equals(that.getHttpProtocol()) : that.getHttpProtocol() == null;
+    }
 }

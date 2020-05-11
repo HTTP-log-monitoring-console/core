@@ -1,11 +1,11 @@
-package com.homework.internal;
+package com.homework.monitoring;
 
 import com.clfparser.CLFLogEntry;
 
 /**
  * Interface for listening to new log entry objects.
  */
-public interface EntryListener {
+public interface LogEntryListener {
     /**
      * Method for receiving new entries.
      * @param entry the valid entry (we expect only nonnull entries).

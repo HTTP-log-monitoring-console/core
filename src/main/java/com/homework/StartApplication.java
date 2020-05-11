@@ -1,15 +1,11 @@
 package com.homework;
 
-import com.filereader.FileTailReader;
-import com.homework.internal.LogLineParserListener;
-import com.homework.internal.Orchestrator;
-import com.homework.ui.ApplicationWindow;
+import com.filereader.FileReader;
+import com.homework.monitoring.Orchestrator;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -19,7 +15,7 @@ public class StartApplication {
     /**
      * The log file tailer
      */
-    private FileTailReader tailer;
+    private FileReader tailer;
 
     final static Logger logger = LogManager.getLogger(StartApplication.class);
 
@@ -37,20 +33,13 @@ public class StartApplication {
         final String inputLogFile = commandLine.getOptionValue("input");
         logger.debug("Input file path [" + inputLogFile + "]");
         Orchestrator orchestrator = new Orchestrator(inputLogFile);
-
-        // The UI execution is performed asynchronously using a separate thread.
-        new Thread(() -> {
-            ApplicationWindow uiWindow = new ApplicationWindow();
-            try {
-                uiWindow.launch();
-            } catch (IOException e) {
-                logger.error("failed to create console UI; exiting ...");
-                logger.error(e.getMessage(), e);
-                System.exit(1);
-            }
-        }, "ui-thread").start();
     }
 
+    /**
+     * Parse command line arguments.
+     * @param arguments the list of string arguments.
+     * @return a CommandLine object.
+     */
     private static CommandLine parseCommandLine(final String[] arguments) {
         logger.debug("Parsing command line arguments : " + Arrays.toString(arguments));
         final Options options = new Options();

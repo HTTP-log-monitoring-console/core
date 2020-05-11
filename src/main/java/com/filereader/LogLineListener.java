@@ -3,7 +3,7 @@ package com.filereader;
 /**
  * Provides listener notification methods when a tailed log file is updated
  */
-public interface LogFileTailerListener {
+public interface LogLineListener {
     /**
      * A new line has been added to the tailed log file
      * 
