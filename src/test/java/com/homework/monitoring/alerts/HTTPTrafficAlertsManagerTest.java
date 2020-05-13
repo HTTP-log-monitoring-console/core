@@ -48,7 +48,7 @@ class HTTPTrafficAlertsManagerTest {
     @Test
     void testInitialization() {
         assertFalse(alertRaised);
-        assertEquals(0, alertsManager.getNumberOfRequests());
+        assertEquals(0, alertsManager.getNumberOfRequestsInWindow());
     }
 
     @Test
@@ -60,7 +60,7 @@ class HTTPTrafficAlertsManagerTest {
         alertsManager.processTrafficStatistics(new HTTPTrafficStats(2000, 0, null));
 
         assertTrue(alertRaised);
-        assertEquals(2000, alertsManager.getNumberOfRequests());
+        assertEquals(2000, alertsManager.getNumberOfRequestsInWindow());
     }
 
     @Test
@@ -75,19 +75,19 @@ class HTTPTrafficAlertsManagerTest {
 
         // we are not over the 5 requests per second time
         assertFalse(alertRaised);
-        assertEquals(42, alertsManager.getNumberOfRequests());
+        assertEquals(42, alertsManager.getNumberOfRequestsInWindow());
 
         alertsManager.processTrafficStatistics(new HTTPTrafficStats(2, 0, null));
         assertFalse(alertRaised);
-        assertEquals(42, alertsManager.getNumberOfRequests());
+        assertEquals(42, alertsManager.getNumberOfRequestsInWindow());
 
         alertsManager.processTrafficStatistics(new HTTPTrafficStats(40, 0, null));
         assertTrue(alertRaised);
-        assertEquals(62, alertsManager.getNumberOfRequests());
+        assertEquals(62, alertsManager.getNumberOfRequestsInWindow());
 
         alertsManager.processTrafficStatistics(new HTTPTrafficStats(5, 0, null));
         assertFalse(alertRaised);
-        assertEquals(47, alertsManager.getNumberOfRequests());
+        assertEquals(47, alertsManager.getNumberOfRequestsInWindow());
     }
 
     /**

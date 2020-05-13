@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class HTTPTrafficAlertsManager implements HTTPStatsListener {
     private int alertThreshold = 5;
-    private int numberOfRequests = 0;
+    private int numberOfRequestsInWindow = 0;
     private boolean alertStateEnabled = false;
 
     /**
@@ -92,23 +92,24 @@ public class HTTPTrafficAlertsManager implements HTTPStatsListener {
 
     @Override
     public void processTrafficStatistics(final HTTPTrafficStats httpTrafficStats) {
-        logger.info("Processing new traffic stats - received " + httpTrafficStats.getTotalNumberOfHTTPRequestsInSnapshot() + " new requests");
+        logger.info("Processing new traffic stats - received " + httpTrafficStats.getTotalNumberOfHTTPRequests() + " new requests");
 
         // we only want to maintain a sliding window for the monitoring window, so if we get updates every N seconds and
         // if we have a predefined monitoring window of M seconds then we must keep max M/N new stat updates.
         if (listTrafficStats.size() >= alertMonitoringWindow / DEFAULT_PERIOD_BETWEEN_STATS_UPDATES) {
             // take oldest stats and remove its details from the alert monitoring.
             final HTTPTrafficStats oldestStats = listTrafficStats.remove();
-            numberOfRequests -= oldestStats.getTotalNumberOfHTTPRequestsInSnapshot();
+            numberOfRequestsInWindow -= oldestStats.getTotalNumberOfHTTPRequests();
         }
         listTrafficStats.add(httpTrafficStats);
 
-        numberOfRequests += httpTrafficStats.getTotalNumberOfHTTPRequestsInSnapshot();
-        float requestsPerSecond = (float) numberOfRequests / alertMonitoringWindow;
+        numberOfRequestsInWindow += httpTrafficStats.getTotalNumberOfHTTPRequests();
+        float requestsPerSecond = (float) numberOfRequestsInWindow / alertMonitoringWindow;
         logger.info("Requests per second = " + requestsPerSecond);
 
         if (requestsPerSecond < alertThreshold) {
             if (alertStateEnabled) {
+                alertStateEnabled = false;
                 logger.error("Alert disabled " + requestsPerSecond);
                 cancelAlert();
             }
@@ -158,7 +159,7 @@ public class HTTPTrafficAlertsManager implements HTTPStatsListener {
     /**
      * @return the current number of requests tracked during the active monitoring window {@link }
      */
-    public int getNumberOfRequests() {
-        return numberOfRequests;
+    public int getNumberOfRequestsInWindow() {
+        return numberOfRequestsInWindow;
     }
 }
