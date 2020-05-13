@@ -1,1 +1,1 @@
-python3  external/log_generator/generate.py external/log_generator/log_config
+python3 external/log_generator/generate.py external/log_generator/log_config
