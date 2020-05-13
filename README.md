@@ -21,7 +21,14 @@ Example log lines:
 
 ## Proposed solution
 
-Java based application using Java 9 runtime environment supporting console (tested on OSX & Windows OSes and Linux-compatible).
+Java based application using Java 9 environment supporting console (tested on OSX & Windows OSes and Linux-compatible).
+Locally I developed and tested using OpenJDK Runtime Environment 13.0.2:
+```
+➜  core git:(master) ✗ java --version
+openjdk 13.0.2 2020-01-14
+OpenJDK Runtime Environment (build 13.0.2+8)
+OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)
+```
 
 Maven is used for dependency control, Log4J2 is used for logging to console / file, Google's Lanterna library is used to create a console text-based GUI.
 
