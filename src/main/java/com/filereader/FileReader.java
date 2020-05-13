@@ -96,7 +96,6 @@ public class FileReader extends Thread {
                     sleep(this.sampleInterval);
                 } catch (IOException e) {
                     logger.error("Problem while reading from file " + logfile.getAbsolutePath() + "; quitting.");
-                    System.exit(1);
                 } catch (InterruptedException e) {
                     logger.warn("File reader thread was interrupted, ignoring.");
                 }
