@@ -48,10 +48,6 @@ public class StartApplication {
         input.setRequired(true);
         options.addOption(input);
 
-        final Option output = new Option("o", "output", true, "output file");
-        output.setRequired(false);
-        options.addOption(output);
-
         final CommandLineParser parser = new DefaultParser();
         final HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd = null;
@@ -60,7 +56,7 @@ public class StartApplication {
             cmd = parser.parse(options, arguments);
         } catch (final ParseException parseException) {
             logger.error("Cannot parse command line arguments : " + parseException.getMessage());
-            formatter.printHelp("utility-name", options);
+            formatter.printHelp("<launch_command>", options);
             System.exit(1);
         }
         return cmd;

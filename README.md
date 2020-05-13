@@ -37,8 +37,11 @@ Closing the console GUI is done either by closing the Terminal / Windows Prompt 
 
 Available arguments for the application's launcher are displayed using the --h command :
 ```
-./runApplication.sh --h
+➜  ✗ java -jar artefacts/httpMonitoringApp.jar --h
+usage: <launch_command>
+ -i,--input <arg>   input log file path
 ```
+The script launchApp.sh/bat will launch the application by passing the input log file in folder "input/log.txt"; either point the app to another log file or simply launch the log generator before.
 
 ### Building the solution
 
@@ -60,7 +63,7 @@ mvn test
 An already existing 3rd party application (log-generator 1.0.2; https://pypi.org/project/log-generator/) does the log generation according to a configuration file (found in the source code).
 The generator requires Python 3 & pip3 to install and run.
 
-For easy use, I have included the source code of the generator in the external/log_generator folder and added scripts (generate_logs.sh/bat) to launch the log generation.
+For easy use, I have included the source code of the generator in the external/log_generator folder and added scripts (generate_logs.sh/bat) to launch the log generation. The generator will create logs in the "input/logs.txt" file.
 
 All rights to this log generator code belong to Peter Scopes (https://pypi.org/project/log-generator/). 
 

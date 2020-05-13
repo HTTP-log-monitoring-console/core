@@ -28,7 +28,7 @@ public class Orchestrator {
      * Default length of the monitoring window during which alerts will be raised or cancelled if the number of requests
      * goes over or below the alert threshold.
      */
-    private final static Integer DEFAULT_ALERT_MONITORING_WINDOW_LENGTH = 30; // in seconds // default 2 minutes.
+    private final static Integer DEFAULT_ALERT_MONITORING_WINDOW_LENGTH = 2 * 60; // in seconds // default 2 minutes.
 
     /**
      * Default number of requests representing the alert threshold for the monitoring window.

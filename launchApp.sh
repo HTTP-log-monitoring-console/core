@@ -1,1 +1,1 @@
-java -jar target/httpMonitoringApp.jar
+java -jar artefacts/httpMonitoringApp.jar -i input/logs.txt
