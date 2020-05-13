@@ -72,7 +72,11 @@ The generator requires Python 3 & pip3 to install and run.
 
 For easy use, I have included the source code of the generator in the external/log_generator folder and added scripts (generate_logs.sh/bat) to launch the log generation. The generator will create logs in the "input/logs.txt" file.
 
-All rights to this log generator code belong to Peter Scopes (https://pypi.org/project/log-generator/). 
+All rights to this log generator code belong to Peter Scopes (https://pypi.org/project/log-generator/).
+
+### Demo
+
+![](artefacts/demo.gif) 
 
 ## Application structure & technical design
 
