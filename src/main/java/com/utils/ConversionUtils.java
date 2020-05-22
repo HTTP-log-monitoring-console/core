@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * Class used to host useful methods for converting values.
  */
-public class ConversionUtils {
+public final class ConversionUtils {
     /**
      * Logger.
      */

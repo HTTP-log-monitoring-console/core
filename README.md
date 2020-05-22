@@ -32,7 +32,7 @@ OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)
 
 Maven is used for dependency control, Log4J2 is used for logging to console / file, Google's Lanterna library is used to create a console text-based GUI.
 
-Reasons for selecting each different framework or library from a list of choices are given below in the 
+Reasons for selecting each different framework or library from a list of choices are given below in the "Technology / library / framework choices" section. 
 
 ### Usage
 
@@ -56,7 +56,7 @@ Using Maven it is easy to build the application with the following command:
 ```
 mvn clean install
 ```
-The application's jar (core-1.0-snapshot.jar) is built in the /target folder of the project's root folder.
+The application's jar (httpMonitoringApp.jar) is built in the /target folder of the project's root folder; I have copied the latest version over to the /artefacts folder.
 
 ### Running tests
 
