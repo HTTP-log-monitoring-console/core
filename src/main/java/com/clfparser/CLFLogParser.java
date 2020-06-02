@@ -21,7 +21,8 @@ public class CLFLogParser {
      * Pattern used to parse CLF logs; more info on what exactly each part is doing here: https://en.wikipedia.org/wiki/Common_Log_Format#Example
      */
     private static final Pattern REGEX = Pattern
-            .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\S+) (\\S+)(.)*$");
+            .compile("^(\\S+) (\\S+) (\\S+) \\[([\\w:./]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\S+) (\\S+)(.)*$",
+                    Pattern.UNICODE_CHARACTER_CLASS);
 
 
     /**

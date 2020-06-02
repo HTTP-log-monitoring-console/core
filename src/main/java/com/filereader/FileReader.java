@@ -63,6 +63,21 @@ public class FileReader extends Thread {
         }
     }
 
+    private String convertToUTF8(final String fakeLine) {
+        if (fakeLine == null)
+            return null;
+
+        byte[] bytes = new byte[fakeLine.length()];
+        for (int i = 0; i < fakeLine.length(); i++)
+            bytes[i] = (byte) fakeLine.charAt(i);
+        try {
+            return new String(bytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("UTF8 parsing error : " + fakeLine);
+        }
+        return fakeLine;
+    }
+
     /**
      * Start the file reader.
      */
@@ -83,12 +98,13 @@ public class FileReader extends Thread {
 
                     if (fileLength > lastPosition) {
                         accessFile.seek(lastPosition);
-                        String line = accessFile.readLine();
+                        String line = convertToUTF8(accessFile.readLine());
+
                         while (line != null) {
                             if (line.trim().length() > 0) {
                                 this.notifyNewLine(line);
                             }
-                            line = accessFile.readLine();
+                            line = convertToUTF8(accessFile.readLine());
                         }
                         lastPosition = accessFile.getFilePointer();
                     }
@@ -101,7 +117,11 @@ public class FileReader extends Thread {
                 }
             }
         } catch (final FileNotFoundException e) {
-            logger.error("Cannot find file " + logfile.getAbsolutePath());
+            final String errorMessage = "Cannot find file " + logfile.getAbsolutePath() +
+                    ". Please pass the correct file as an argument when launching the application's jar file.";
+            logger.error(errorMessage);
+            System.out.println(errorMessage);
+            System.exit(1);
         } finally {
             if (accessFile != null) {
                 try {

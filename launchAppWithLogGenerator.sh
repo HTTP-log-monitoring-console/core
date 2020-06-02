@@ -1,0 +1,1 @@
+java -jar artefacts/httpMonitoringApp.jar -i input/logs.txt

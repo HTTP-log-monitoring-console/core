@@ -31,9 +31,9 @@ public class Orchestrator {
     private final static Integer DEFAULT_ALERT_MONITORING_WINDOW_LENGTH = 2 * 60; // in seconds // default 2 minutes.
 
     /**
-     * Default number of requests representing the alert threshold for the monitoring window.
+     * Default number of requests per second. representing the alert threshold for the monitoring window.
      */
-    private final static Integer DEFAULT_ALERT_NUMBER_REQUESTS_THRESHOLD = 5;
+    private final static Integer DEFAULT_ALERT_NUMBER_REQUESTS_THRESHOLD = 10;
 
     /**
      * Default period for creating new aggregated stats from the read & parsed new CLF log file lines, in seconds.

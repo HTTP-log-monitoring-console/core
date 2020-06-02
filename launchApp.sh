@@ -1,1 +1,1 @@
-java -jar artefacts/httpMonitoringApp.jar -i input/logs.txt
+java -jar artefacts/httpMonitoringApp.jar -i /tmp/access.log

@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
@@ -22,7 +23,11 @@ public final class ConversionUtils {
     /**
      * Date formatter according to CLF log format.
      */
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss Z");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()
+                .appendOptional(DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss Z"))
+                .appendOptional(DateTimeFormatter.ofPattern("dd/MMMM/yyyy:HH:mm:ss Z"))
+                .appendOptional(DateTimeFormatter.ofPattern("dd/MMMMM/yyyy:HH:mm:ss Z"))
+                .toFormatter(Locale.getDefault());
 
     /**
      * Parse a date in string format according to CLF log date format.

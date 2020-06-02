@@ -81,7 +81,17 @@ public class HTTPTrafficStatsManager implements LogEntryListener {
     @Override
     public void process(CLFLogEntry entry) {
         if (entry != null) {
-            activeEntries.add(entry);
+            final Instant currentMoment = Instant.now();
+            final Instant entryTimestamp = entry.getTimestamp().toInstant();
+            if (entryTimestamp.isAfter(currentMoment)) {
+                logger.warn("Discarding log entry as its timestamp is in the future from the current moment (" + currentMoment.toString() +
+                        "); entry=" + entry.toString());
+            } else if (currentMoment.minusMillis(2 * DEFAULT_STATS_CREATION_INTERVAL * 1000).isAfter(entryTimestamp)) {
+                logger.warn("Discarding log entry as its timestamp is too old from the current moment (" + currentMoment.toString() +
+                                        "); entry=" + entry.toString());
+            } else {
+                activeEntries.add(entry);
+            }
         }
     }
 
